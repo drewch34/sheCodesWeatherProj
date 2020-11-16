@@ -156,7 +156,7 @@ function getPosition(position) {
 
   axios.get(url).then(function (response) {
     console.log(response);
-    let temp = Math.round(response.data.main.temp);
+    let temp = Math.round(response.data.main.temp); //meow
     let searchCity = response.data.name;
     let searchCountry = response.data.sys.country;
     let searchFeels = Math.round(response.data.main.feels_like);
