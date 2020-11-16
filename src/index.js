@@ -115,6 +115,7 @@ let displayTemp = document.querySelector("#curr-temp");
 let displayCountry = document.querySelector("#curr-state-country");
 let currLocBtn = document.querySelector("#current-loc");
 let displayFeelsLike = document.querySelector("#curr-feels-like-temp");
+let displayEmoji = document.querySelector("#current-emoji");
 
 let key = "f42932205cbcb577e1d9c675e3aae5ef";
 
@@ -126,7 +127,7 @@ searchForm.addEventListener("submit", function(event) {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${key}`;
 
     axios.get(url).then(function (response) {
-      // console.log(response);
+      console.log(response);
       let temp = Math.round(response.data.main.temp);
       let gpsCity = response.data.name;
       let gpsCountry = response.data.sys.country;
@@ -142,16 +143,41 @@ searchForm.addEventListener("submit", function(event) {
 
 });
 
+//EMOJI FUNC
+function determineEmoji(weatherDescription) {
+  if (weatherDescription.includes('clear')) {
+    return '☀️';
+  } if (weatherDescription.includes('rain') || weatherDescription.includes('drizzle') | weatherDescription.includes('mist')) {
+    return '🌧';
+  } if (weatherDescription.includes('thunderstorm') || weatherDescription.includes('squall')) {
+    return '⛈';
+  } if (weatherDescription.includes('cloud')) {
+    return '⛅'
+  } if (weatherDescription.includes('snow')) {
+    return '🌨';
+  } if (weatherDescription.includes('fog') || weatherDescription.includes('smoke') || weatherDescription.includes('haze')) {
+    return '🌫';
+  } if (weatherDescription.includes('sand') || weatherDescription.includes('dust')) {
+    return '🐫';
+  } if (weatherDescription.includes('ash') || weatherDescription.includes('volcano')) {
+    return '🌋';
+  } if (weatherDescription.includes('tornado')) {
+    return '🌪';
+  } else {
+    return '🌎';
+  }
+};
+
 //GET CURRENT LOCATION INFO
 
 
 function getPosition(position) {
   let lat = position.coords.latitude;
-  console.log(lat);
+  // console.log(lat);
   let lon = position.coords.longitude;
-  console.log(lon);
+  // console.log(lon);
   let place = `lat=${lat}&lon=${lon}`;
-  let url = `https://api.openweathermap.org/data/2.5/weather?${place}&units=imperial&appid=${key}`;
+  let url = `https://api.openweathermap.org/data/2.5/weather?${place}&units=metric&appid=${key}`;
   // console.log(url);
 
   axios.get(url).then(function (response) {
@@ -160,19 +186,23 @@ function getPosition(position) {
     let searchCity = response.data.name;
     let searchCountry = response.data.sys.country;
     let searchFeels = Math.round(response.data.main.feels_like);
+    let currDescription = response.data.weather[0].description;
+    console.log(currDescription);
+    let currEmoji = determineEmoji(currDescription);
     // console.log(searchCity)
     // console.log(temp);
     displayCity.innerHTML = searchCity;
     displayCountry.innerHTML = searchCountry;
     displayTemp.innerHTML = temp;
     displayFeelsLike.innerHTML = searchFeels;
+    displayEmoji.innerHTML = currEmoji;
   });
 }
 
-currLocBtn.addEventListener("click", function (event) {
-  navigator.geolocation.getCurrentPosition(getPosition);
-  // console.log(navigator);
-})
+// currLocBtn.addEventListener("click", function (event) {
+navigator.geolocation.getCurrentPosition(getPosition);
+// console.log(navigator);
+// })
 
 
 //TEMP UNIT CHANGE
