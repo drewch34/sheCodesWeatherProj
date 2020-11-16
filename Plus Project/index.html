@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous"
+  >
+  <link href="https://fonts.googleapis.com/css2?family=David+Libre&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="src/styles.css">
+
+  <title>Weather Project</title>
+</head>
+
+<body>
+  <div class="container">
+
+    <nav class="navbar navbar-light bg-light">
+      <form id="search-city-form" class="form-inline">
+        <input id="search-city" class="form-control mr-sm-2" type="text" placeholder="Search your city" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">🔎</button>
+      </form>
+
+      <button id="current-loc" type="button" class="btn btn-secondary">Current Location</button>
+
+      <div class="btn-group" role="group" aria-label="hour">
+        <button type="button" class="btn btn-secondary twelve-hour">12h</button>
+        <button type="button" class="btn btn-secondary all-hour">24h</button>
+      </div>
+
+      <div class="btn-group" role="group" aria-label="temp">
+        <button id="f-button" type="button" class="btn btn-secondary farenheit">F°</button>
+        <button id="c-button" type="button" class="btn btn-secondary celcius">C°</button>
+      </div>
+    </nav>
+
+  </br>
+
+    <div class="weather-section">
+      <div class="row">
+        <div class="col current border-right">
+          <div id="curr-city" class="row city justify-content-center">
+            Atlanta
+          </div>
+          <div id="curr-date" class="row current-date justify-content-center">
+            Thursday, Nov 5
+          </div>
+          <div id="curr-state-country" class="row state-country justify-content-center">
+            Georgia, USA
+          </div>
+          <div class="row current-emoji justify-content-center">
+            🌤
+          </div>
+          <div class="row current-temp justify-content-center">
+            Currently
+            <p id="curr-temp" class="temp">27</p>
+          </div>
+          <div class="row current-feels justify-content-center">
+            Feels like
+            <p id="curr-feels-like-temp" class="temp">29</p>
+          </div>
+          <div class="row sunrise justify-content-center">
+            Sunrise 7:31
+          </div>
+          <div class="row sunset justify-content-center">
+            Sunset 19:35
+          </div>
+        </div>
+        <div class="col future">
+          <table class="table">
+
+            <tbody>
+              <tr>
+                <th scope="row day-one" class="future-emoji">🌥</th>
+                <td id="day-plus-one" >Monday</td>
+                <td>
+                  <p class="temp">27</p>
+                  <p class="temp">20</p>
+                </td>
+                <td>
+                  <p>↑</p>
+                  <p>↓</p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row day-two" class="future-emoji">🌦</th>
+                <td id="day-plus-two">Tuesday</td>
+                <td>
+                  <p class="temp">27</p>
+                  <p class="temp">20</p>
+                </td>
+                <td>
+                  <p>↑</p>
+                  <p>↓</p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row day-three" class="future-emoji">🌥</th>
+                <td id="day-plus-three">Wednesday</td>
+                <td>
+                  <p class="temp">27</p>
+                  <p class="temp">20</p>
+                </td>
+                <td>
+                  <p>↑</p>
+                  <p>↓</p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row day-four" class="future-emoji">🌥</th>
+                <td id="day-plus-four">Thursday</td>
+                <td>
+                  <p class="temp">27</p>
+                  <p class="temp">20</p>
+                </td>
+                <td>
+                  <p>↑</p>
+                  <p>↓</p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row day-five" class="future-emoji">⛅️</th>
+                <td id="day-plus-five">Friday</td>
+                <td >
+                  <p class="temp">27</p>
+                  <p class="temp">20</p>
+                </td>
+                <td>
+                  <p>↑</p>
+                  <p>↓</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</body>
+
+</html>
