@@ -24,90 +24,50 @@ let months = [
   "December"
 ];
 
-let date = new Date();
-
 function formatDate(current) {
-  let day = days[current.getDay()];
-  let month = months[current.getMonth()];
-  let date = current.getDate();
+  let date = new Date(current);
+  // console.log(date);
+  let day = days[date.getDay()];
+  let month = months[date.getMonth()];
+  let dateDay = date.getDate();
 
-  return `${day}, ${month} ${date}`
+  return `${day}, ${month} ${dateDay}`
 };
 
 let currDateEl = document.querySelector("#curr-date");
-currDateEl.innerHTML = formatDate(date);
 
 
-
-
-//FUTURE DAYS DISPLAY
+// //FUTURE DAYS DISPLAY
 
 function futureFormateDate(current, num) {
-  let day = days[(current.getDay() + num) % 7];
+  let date = new Date(current);
+  let day = days[(date.getDay() + num) % 7];
   return day;
 }
 
-id="day-plus-four"
 let dayOneEl = document.querySelector("#day-plus-one");
 let dayTwoEl = document.querySelector("#day-plus-two");
 let dayThreeEl = document.querySelector("#day-plus-three");
 let dayFourEl = document.querySelector("#day-plus-four");
 let dayFiveEl = document.querySelector("#day-plus-five");
 
-dayOneEl.innerHTML = futureFormateDate(date, 1);
-dayTwoEl.innerHTML = futureFormateDate(date, 2);
-dayThreeEl.innerHTML = futureFormateDate(date, 3);
-dayFourEl.innerHTML = futureFormateDate(date, 4);
-dayFiveEl.innerHTML = futureFormateDate(date, 5);
+//SUNRISE SUNSET FUNCTION
 
+function formatTime(current) {
+  let date = new Date(current);
+  console.log(date);
+  let hour = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  if (hour < 10) {
+    hour = `0${hour}`;
+  }
+  return `${hour}:${minutes}`;
+};
 
-
-//WEATHER ALERT JS
-
-// let weather = { //weather{}
-//   "paris": {  //weather[key]{}
-//     temp: 19.7, // weather[key][temp]
-//     humidity: 80
-//   },
-//   "tokyo": {
-//     temp: 17.3,
-//     humidity: 50
-//   },
-//   "lisbon": {
-//     temp: 30.2,
-//     humidity: 20
-//   },
-//   "san francisco": {
-//     temp: 20.9,
-//     humidity: 100
-//   },
-//   "moscow": {
-//     temp: -5,
-//     humidity: 20
-//   }
-// };
-
-// var query = prompt("Please enter a city");
-// var city = query.trim().toLowerCase();
-// // console.log(city);
-// // console.log(weather.paris);
-
-// var forecast = function(weatherData, searchCity) {
-//   // console.log(weatherData);
-//   // console.log(searchCity);
-//   // console.log(weatherData[searchCity]);
-//   if (weatherData[searchCity] !== undefined) {
-//     alert("It is currently " + weatherData[searchCity]["temp"] + " in " + searchCity + " with a humidity of " + weatherData[searchCity]["humidity"] + ".");
-//   } else {
-//     alert("Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+" + searchCity);
-//   }
-// };
-
-// forecast(weather, city);
-
-
-//SEARCH BAR
-
+//CHANGE MAIN INFO
 let searchCityInput = document.querySelector("#search-city");
 let searchForm = document.querySelector("#search-city-form");
 let displayCity = document.querySelector("#curr-city");
@@ -116,8 +76,44 @@ let displayCountry = document.querySelector("#curr-state-country");
 let currLocBtn = document.querySelector("#current-loc");
 let displayFeelsLike = document.querySelector("#curr-feels-like-temp");
 let displayEmoji = document.querySelector("#current-emoji");
+let displaySunrise = document.querySelector("#curr-sunrise");
+let displaySunset = document.querySelector("#curr-sunset");
 
 let key = "f42932205cbcb577e1d9c675e3aae5ef";
+
+function changeDisplay(responseInfo) {
+  console.log(responseInfo);
+  let temp = Math.round(responseInfo.data.main.temp); //meow
+  let searchCity = responseInfo.data.name;
+  let searchCountry = responseInfo.data.sys.country;
+  let searchFeels = Math.round(responseInfo.data.main.feels_like);
+  let currDescription = responseInfo.data.weather[0].description;
+  let currTime = ((responseInfo.data.dt) * 1000)
+  // console.log(currTime);
+  let currEmoji = determineEmoji(currDescription);
+  let currSunset = ((responseInfo.data.sys.sunset) * 1000);
+  let currSunrise = ((responseInfo.data.sys.sunrise) * 1000);
+  // console.log(searchCity)
+  // console.log(temp);
+
+
+  displayCity.innerHTML = searchCity;
+  displayCountry.innerHTML = searchCountry;
+  displayTemp.innerHTML = temp;
+  displayFeelsLike.innerHTML = searchFeels;
+  displayEmoji.innerHTML = currEmoji;
+  currDateEl.innerHTML = formatDate(currTime);
+  displaySunrise.innerHTML = formatTime(currSunrise);
+  displaySunset.innerHTML = formatTime(currSunset);
+
+  dayOneEl.innerHTML = futureFormateDate(currTime, 1);
+  dayTwoEl.innerHTML = futureFormateDate(currTime, 2);
+  dayThreeEl.innerHTML = futureFormateDate(currTime, 3);
+  dayFourEl.innerHTML = futureFormateDate(currTime, 4);
+  dayFiveEl.innerHTML = futureFormateDate(currTime, 5);
+}
+
+//SEARCH BAR
 
 searchForm.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -126,19 +122,7 @@ searchForm.addEventListener("submit", function(event) {
 
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${key}`;
 
-    axios.get(url).then(function (response) {
-      console.log(response);
-      let temp = Math.round(response.data.main.temp);
-      let gpsCity = response.data.name;
-      let gpsCountry = response.data.sys.country;
-      let gpsFeels = Math.round(response.data.main.feels_like);
-      // console.log(gpsCity)
-      // console.log(temp);
-      displayCity.innerHTML = gpsCity;
-      displayCountry.innerHTML = gpsCountry;
-      displayTemp.innerHTML = temp;
-      displayFeelsLike.innerHTML = gpsFeels;
-    });
+    axios.get(url).then(changeDisplay);
   }
 
 });
@@ -168,8 +152,8 @@ function determineEmoji(weatherDescription) {
   }
 };
 
-//GET CURRENT LOCATION INFO
 
+//GET CURRENT LOCATION INFO
 
 function getPosition(position) {
   let lat = position.coords.latitude;
@@ -180,24 +164,8 @@ function getPosition(position) {
   let url = `https://api.openweathermap.org/data/2.5/weather?${place}&units=metric&appid=${key}`;
   // console.log(url);
 
-  axios.get(url).then(function (response) {
-    console.log(response);
-    let temp = Math.round(response.data.main.temp); //meow
-    let searchCity = response.data.name;
-    let searchCountry = response.data.sys.country;
-    let searchFeels = Math.round(response.data.main.feels_like);
-    let currDescription = response.data.weather[0].description;
-    console.log(currDescription);
-    let currEmoji = determineEmoji(currDescription);
-    // console.log(searchCity)
-    // console.log(temp);
-    displayCity.innerHTML = searchCity;
-    displayCountry.innerHTML = searchCountry;
-    displayTemp.innerHTML = temp;
-    displayFeelsLike.innerHTML = searchFeels;
-    displayEmoji.innerHTML = currEmoji;
-  });
-}
+  axios.get(url).then(changeDisplay);
+};
 
 // currLocBtn.addEventListener("click", function (event) {
 navigator.geolocation.getCurrentPosition(getPosition);
