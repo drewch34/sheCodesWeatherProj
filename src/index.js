@@ -53,11 +53,12 @@ let dayFiveEl = document.querySelector("#day-plus-five");
 
 //SUNRISE SUNSET FUNCTION
 
-function formatTime(current) {
+function formatTime(current, offset) {
+
   let date = new Date(current);
   console.log(date);
-  let hour = date.getHours();
-  let minutes = date.getMinutes();
+  let hour = date.getHours().toLocaleString();
+  let minutes = date.getMinutes().toLocaleString();
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
@@ -75,7 +76,7 @@ let displayTemp = document.querySelector("#curr-temp");
 let displayCountry = document.querySelector("#curr-state-country");
 let currLocBtn = document.querySelector("#current-loc");
 let displayFeelsLike = document.querySelector("#curr-feels-like-temp");
-let displayEmoji = document.querySelector("#current-emoji");
+let displayEmoji = document.querySelector("#current-icon");
 let displaySunrise = document.querySelector("#curr-sunrise");
 let displaySunset = document.querySelector("#curr-sunset");
 
@@ -87,12 +88,14 @@ function changeDisplay(responseInfo) {
   let searchCity = responseInfo.data.name;
   let searchCountry = responseInfo.data.sys.country;
   let searchFeels = Math.round(responseInfo.data.main.feels_like);
-  let currDescription = responseInfo.data.weather[0].description;
+  let currDescription = responseInfo.data.weather[0].icon;
   let currTime = ((responseInfo.data.dt) * 1000)
+  let timeOffset = (responseInfo.data.timezone);
   // console.log(currTime);
-  let currEmoji = determineEmoji(currDescription);
-  let currSunset = ((responseInfo.data.sys.sunset) * 1000);
-  let currSunrise = ((responseInfo.data.sys.sunrise) * 1000);
+  // let currEmoji = determineEmoji(currDescription);
+  let currSunset = responseInfo.data.sys.sunset * 1000;
+  let currSunrise = responseInfo.data.sys.sunrise * 1000;
+
   // console.log(searchCity)
   // console.log(temp);
 
@@ -101,7 +104,7 @@ function changeDisplay(responseInfo) {
   displayCountry.innerHTML = searchCountry;
   displayTemp.innerHTML = temp;
   displayFeelsLike.innerHTML = searchFeels;
-  displayEmoji.innerHTML = currEmoji;
+  displayEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${currDescription}@2x.png`);
   currDateEl.innerHTML = formatDate(currTime);
   displaySunrise.innerHTML = formatTime(currSunrise);
   displaySunset.innerHTML = formatTime(currSunset);
@@ -126,31 +129,6 @@ searchForm.addEventListener("submit", function(event) {
   }
 
 });
-
-//EMOJI FUNC
-function determineEmoji(weatherDescription) {
-  if (weatherDescription.includes('clear')) {
-    return '☀️';
-  } if (weatherDescription.includes('rain') || weatherDescription.includes('drizzle') | weatherDescription.includes('mist')) {
-    return '🌧';
-  } if (weatherDescription.includes('thunderstorm') || weatherDescription.includes('squall')) {
-    return '⛈';
-  } if (weatherDescription.includes('cloud')) {
-    return '⛅'
-  } if (weatherDescription.includes('snow')) {
-    return '🌨';
-  } if (weatherDescription.includes('fog') || weatherDescription.includes('smoke') || weatherDescription.includes('haze')) {
-    return '🌫';
-  } if (weatherDescription.includes('sand') || weatherDescription.includes('dust')) {
-    return '🐫';
-  } if (weatherDescription.includes('ash') || weatherDescription.includes('volcano')) {
-    return '🌋';
-  } if (weatherDescription.includes('tornado')) {
-    return '🌪';
-  } else {
-    return '🌎';
-  }
-};
 
 
 //GET CURRENT LOCATION INFO
