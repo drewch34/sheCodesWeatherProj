@@ -98,13 +98,13 @@ function changeDisplay(responseInfo) {
 
   displayCity.innerHTML = searchCity;
   displayCountry.innerHTML = searchCountry;
-  displayTemp.innerHTML = celciusTemp;
-  displayFeelsLike.innerHTML = celciusFeelsLike;
+  displayTemp.innerHTML = `Currently ${celciusTemp}°C`;
+  displayFeelsLike.innerHTML = `Feels like ${celciusFeelsLike}°C`;
   displayEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${currIcon}@2x.png`);
   currDateEl.innerHTML = formatDate(currTime);
   displaySunrise.innerHTML = "The sunrise in your time is " + formatTime(currSunrise);
   displaySunset.innerHTML = "The sunset in your time is " + formatTime(currSunset);
-  displayWindspeed.innerHTML = `${currWindspeed} km/hr`;
+  displayWindspeed.innerHTML = `Wind: ${currWindspeed} km/hr`;
   displayDescription.innerHTML = capCurrDescript;
 
   dayOneEl.innerHTML = futureFormateDate(currTime, 1);
@@ -143,8 +143,8 @@ function changeWeekly(response) {
   celciusDayOneHigh = dayOneResHigh;
   celciusDayOneLow = dayOneResLow;
 
-  displayDayOneHigh.innerHTML = dayOneResHigh;
-  displayDayOneLow.innerHTML = dayOneResLow;
+  displayDayOneHigh.innerHTML = `${dayOneResHigh}°C`;
+  displayDayOneLow.innerHTML = `${dayOneResLow}°C`;
   displayDayOneEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${dayOneResIcon}@2x.png`);
 
 
@@ -154,8 +154,8 @@ function changeWeekly(response) {
   celciusDayTwoHigh = dayTwoResHigh;
   celciusDayTwoLow = dayTwoResLow;
 
-  displayDayTwoHigh.innerHTML = dayTwoResHigh;
-  displayDayTwoLow.innerHTML = dayTwoResLow;
+  displayDayTwoHigh.innerHTML = `${dayTwoResHigh}°C`;
+  displayDayTwoLow.innerHTML = `${dayTwoResLow}°C`;
   displayDayTwoEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${dayTwoResIcon}@2x.png`);
 
 
@@ -165,8 +165,8 @@ function changeWeekly(response) {
   celciusDayThreeHigh = dayThreeResHigh;
   celciusDayThreeLow = dayThreeResLow;
 
-  displayDayThreeHigh.innerHTML = dayThreeResHigh;
-  displayDayThreeLow.innerHTML = dayThreeResLow;
+  displayDayThreeHigh.innerHTML = `${dayThreeResHigh}°C`;
+  displayDayThreeLow.innerHTML = `${dayThreeResLow}°C`;
   displayDayThreeEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${dayThreeResIcon}@2x.png`);
 
 
@@ -176,8 +176,8 @@ function changeWeekly(response) {
   celciusDayFourHigh = dayFourResHigh;
   celciusDayFourLow = dayFourResLow;
 
-  displayDayFourHigh.innerHTML = dayFourResHigh;
-  displayDayFourLow.innerHTML = dayFourResLow;
+  displayDayFourHigh.innerHTML = `${dayFourResHigh}°C`;
+  displayDayFourLow.innerHTML = `${dayFourResLow}°C`;
   displayDayFourEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${dayFourResIcon}@2x.png`);
 
 
@@ -187,8 +187,8 @@ function changeWeekly(response) {
   celciusDayFiveHigh = dayFiveResHigh;
   celciusDayFiveLow = dayFiveResLow;
 
-  displayDayFiveHigh.innerHTML = dayFiveResHigh;
-  displayDayFiveLow.innerHTML = dayFiveResLow;
+  displayDayFiveHigh.innerHTML = `${dayFiveResHigh}°C`;
+  displayDayFiveLow.innerHTML = `${dayFiveResLow}°C`;
   displayDayFiveEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${dayFiveResIcon}@2x.png`);
 }
 
@@ -250,34 +250,34 @@ let temps = document.getElementsByClassName("temp");
 
 fUnitBtn.addEventListener("click", function(event) {
   event.preventDefault();
-  displayTemp.innerHTML = Math.round((celciusTemp * 9/5) + 32);
-  displayFeelsLike.innerHTML = Math.round((celciusFeelsLike* 9/5) + 32);
-  displayDayOneHigh.innerHTML = Math.round((celciusDayOneHigh * 9/5) + 32);
-  displayDayOneLow.innerHTML = Math.round((celciusDayOneLow * 9/5) + 32);
-  displayDayTwoHigh.innerHTML = Math.round((celciusDayTwoHigh * 9/5) + 32);
-  displayDayTwoLow.innerHTML = Math.round((celciusDayTwoLow * 9/5) + 32);
-  displayDayThreeHigh.innerHTML = Math.round((celciusDayThreeHigh * 9/5) + 32);
-  displayDayThreeLow.innerHTML = Math.round((celciusDayThreeLow * 9/5) + 32);
-  displayDayFourHigh.innerHTML = Math.round((celciusDayFourHigh * 9/5) + 32);
-  displayDayFourLow.innerHTML = Math.round((celciusDayFourLow * 9/5) + 32);
-  displayDayFiveHigh.innerHTML = Math.round((celciusDayFiveHigh * 9/5) + 32);
-  displayDayFiveLow.innerHTML = Math.round((celciusDayFiveLow * 9/5) + 32);
+  displayTemp.innerHTML = `Currently ${Math.round((celciusTemp * 9/5) + 32)}°F`;
+  displayFeelsLike.innerHTML = `Feels like ${Math.round((celciusFeelsLike* 9/5) + 32)}°F`;
+  displayDayOneHigh.innerHTML = `${Math.round((celciusDayOneHigh * 9/5) + 32)}°F`;
+  displayDayOneLow.innerHTML = `${Math.round((celciusDayOneLow * 9/5) + 32)}°F`;
+  displayDayTwoHigh.innerHTML = `${Math.round((celciusDayTwoHigh * 9/5) + 32)}°F`;
+  displayDayTwoLow.innerHTML = `${Math.round((celciusDayTwoLow * 9/5) + 32)}°F`;
+  displayDayThreeHigh.innerHTML = `${Math.round((celciusDayThreeHigh * 9/5) + 32)}°F`;
+  displayDayThreeLow.innerHTML = `${Math.round((celciusDayThreeLow * 9/5) + 32)}°F`;
+  displayDayFourHigh.innerHTML = `${Math.round((celciusDayFourHigh * 9/5) + 32)}°F`;
+  displayDayFourLow.innerHTML = `${Math.round((celciusDayFourLow * 9/5) + 32)}°F`;
+  displayDayFiveHigh.innerHTML = `${Math.round((celciusDayFiveHigh * 9/5) + 32)}°F`;
+  displayDayFiveLow.innerHTML = `${Math.round((celciusDayFiveLow * 9/5) + 32)}°F`;
 });
 
 cUnitBtn.addEventListener("click", function(event) {
   event.preventDefault();
-  displayTemp.innerHTML = celciusTemp;
-  displayFeelsLike.innerHTML = celciusFeelsLike;
-  displayDayOneHigh.innerHTML = celciusDayOneHigh;
-  displayDayOneLow.innerHTML = celciusDayOneLow;
-  displayDayTwoHigh.innerHTML = celciusDayTwoHigh;
-  displayDayTwoLow.innerHTML = celciusDayTwoLow;
-  displayDayThreeHigh.innerHTML = celciusDayThreeHigh;
-  displayDayThreeLow.innerHTML = celciusDayThreeLow;
-  displayDayFourHigh.innerHTML = celciusDayFourHigh;
-  displayDayFourLow.innerHTML = celciusDayFourLow;
-  displayDayFiveHigh.innerHTML = celciusDayFiveHigh;
-  displayDayFiveLow.innerHTML = celciusDayFiveLow;
+  displayTemp.innerHTML = `Currently ${celciusTemp}°C`;
+  displayFeelsLike.innerHTML = `Feels like ${celciusFeelsLike}°C`;
+  displayDayOneHigh.innerHTML = `${celciusDayOneHigh}°C`;
+  displayDayOneLow.innerHTML = `${celciusDayOneLow}°C`;
+  displayDayTwoHigh.innerHTML = `${celciusDayTwoHigh}°C`;
+  displayDayTwoLow.innerHTML = `${celciusDayTwoLow}°C`;
+  displayDayThreeHigh.innerHTML = `${celciusDayThreeHigh}°C`;
+  displayDayThreeLow.innerHTML = `${celciusDayThreeLow}°C`;
+  displayDayFourHigh.innerHTML = `${celciusDayFourHigh}°C`;
+  displayDayFourLow.innerHTML = `${celciusDayFourLow}°C`;
+  displayDayFiveHigh.innerHTML = `${celciusDayFiveHigh}°C`;
+  displayDayFiveLow.innerHTML = `${celciusDayFiveLow}°C`;
 });
 
 
