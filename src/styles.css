@@ -33,6 +33,9 @@ body {
   font-size: 25px;
 }
 
+td {
+  vertical-align: center;
+}
 
 .current-date {
   font-size: 15px;
