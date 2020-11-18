@@ -74,16 +74,22 @@ let displayFeelsLike = document.querySelector("#curr-feels-like-temp");
 let displayEmoji = document.querySelector("#current-icon");
 let displaySunrise = document.querySelector("#curr-sunrise");
 let displaySunset = document.querySelector("#curr-sunset");
+let displayDescription = document.querySelector("#current-des");
+let displayWindspeed = document.querySelector("#current-windspeed");
+
 
 function changeDisplay(responseInfo) {
   let temp = Math.round(responseInfo.data.main.temp);
   let searchCity = responseInfo.data.name;
   let searchCountry = responseInfo.data.sys.country;
   let searchFeels = Math.round(responseInfo.data.main.feels_like);
-  let currDescription = responseInfo.data.weather[0].icon;
+  let currIcon = responseInfo.data.weather[0].icon;
   let currTime = ((responseInfo.data.dt) * 1000)
   let currSunset = responseInfo.data.sys.sunset * 1000;
   let currSunrise = responseInfo.data.sys.sunrise * 1000;
+  let currDescription = responseInfo.data.weather[0].description
+  let capCurrDescript = currDescription.charAt(0).toUpperCase() + currDescription.slice(1);
+  let currWindspeed = responseInfo.data.wind.speed;
 
   celciusTemp = temp;
   celciusFeelsLike = searchFeels;
@@ -94,10 +100,12 @@ function changeDisplay(responseInfo) {
   displayCountry.innerHTML = searchCountry;
   displayTemp.innerHTML = celciusTemp;
   displayFeelsLike.innerHTML = celciusFeelsLike;
-  displayEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${currDescription}@2x.png`);
+  displayEmoji.setAttribute("src", `http://openweathermap.org/img/wn/${currIcon}@2x.png`);
   currDateEl.innerHTML = formatDate(currTime);
   displaySunrise.innerHTML = "The sunrise in your time is " + formatTime(currSunrise);
   displaySunset.innerHTML = "The sunset in your time is " + formatTime(currSunset);
+  displayWindspeed.innerHTML = `${currWindspeed} km/hr`;
+  displayDescription.innerHTML = capCurrDescript;
 
   dayOneEl.innerHTML = futureFormateDate(currTime, 1);
   dayTwoEl.innerHTML = futureFormateDate(currTime, 2);
