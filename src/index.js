@@ -26,7 +26,6 @@ let months = [
 
 function formatDate(current) {
   let date = new Date(current);
-  // console.log(date);
   let day = days[date.getDay()];
   let month = months[date.getMonth()];
   let dateDay = date.getDate();
@@ -38,7 +37,6 @@ let currDateEl = document.querySelector("#curr-date");
 
 
 // //FUTURE DAYS DISPLAY
-
 function futureFormateDate(current, num) {
   let date = new Date(current);
   let day = days[(date.getDay() + num) % 7];
@@ -52,11 +50,8 @@ let dayFourEl = document.querySelector("#day-plus-four");
 let dayFiveEl = document.querySelector("#day-plus-five");
 
 //SUNRISE SUNSET FUNCTION
-
 function formatTime(current, offset) {
-
   let date = new Date(current);
-  // console.log(date);
   let hour = date.getHours().toLocaleString();
   let minutes = date.getMinutes().toLocaleString();
   if (minutes < 10) {
@@ -81,16 +76,12 @@ let displaySunrise = document.querySelector("#curr-sunrise");
 let displaySunset = document.querySelector("#curr-sunset");
 
 function changeDisplay(responseInfo) {
-  console.log(responseInfo);
   let temp = Math.round(responseInfo.data.main.temp);
   let searchCity = responseInfo.data.name;
   let searchCountry = responseInfo.data.sys.country;
   let searchFeels = Math.round(responseInfo.data.main.feels_like);
   let currDescription = responseInfo.data.weather[0].icon;
   let currTime = ((responseInfo.data.dt) * 1000)
-  // let timeOffset = (responseInfo.data.timezone);
-  // console.log(currTime);
-  // let currEmoji = determineEmoji(currDescription);
   let currSunset = responseInfo.data.sys.sunset * 1000;
   let currSunrise = responseInfo.data.sys.sunrise * 1000;
 
@@ -115,8 +106,7 @@ function changeDisplay(responseInfo) {
   dayFiveEl.innerHTML = futureFormateDate(currTime, 5);
 }
 
-//CHANGE WEEKLY FORECAST
-
+//CHANGE WEEKLY FORECAS
 let displayDayOneHigh = document.querySelector("#day-one-high");
 let displayDayOneLow = document.querySelector("#day-one-low");
 let displayDayOneEmoji = document.querySelector("#day-one-emoji");
@@ -139,8 +129,6 @@ let displayDayFiveEmoji = document.querySelector("#day-five-emoji");
 
 
 function changeWeekly(response) {
-  // console.log(response);
-
   let dayOneResHigh = Math.round(response.data.daily[0].temp.max);
   let dayOneResLow = Math.round(response.data.daily[0].temp.min);
   let dayOneResIcon = response.data.daily[0].weather[0].icon;
@@ -233,12 +221,8 @@ function getPosition(position) {
 
 navigator.geolocation.getCurrentPosition(getPosition);
 
-//TIME UNIT CHANGE
-var twentyFourHour = null;
-
 
 //TEMP UNIT CHANGE
-
 var celciusTemp = null;
 var celciusFeelsLike = null;
 var celciusDayOneHigh = null;
@@ -258,7 +242,6 @@ let temps = document.getElementsByClassName("temp");
 
 fUnitBtn.addEventListener("click", function(event) {
   event.preventDefault();
-  // console.log(temps);
   displayTemp.innerHTML = Math.round((celciusTemp * 9/5) + 32);
   displayFeelsLike.innerHTML = Math.round((celciusFeelsLike* 9/5) + 32);
   displayDayOneHigh.innerHTML = Math.round((celciusDayOneHigh * 9/5) + 32);
@@ -273,9 +256,6 @@ fUnitBtn.addEventListener("click", function(event) {
   displayDayFiveLow.innerHTML = Math.round((celciusDayFiveLow * 9/5) + 32);
 });
 
-
-//will watch solution because i know that if it's already celcius,
-//it'll subtract another 32. not sure how to set a default
 cUnitBtn.addEventListener("click", function(event) {
   event.preventDefault();
   displayTemp.innerHTML = celciusTemp;
